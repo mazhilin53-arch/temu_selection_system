@@ -1,0 +1,91 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment variables (sensitive)
+.env
+.env.local
+.env.*.local
+
+# Project specific
+*.log
+logs/
+*.sql
+!product_data_postgres_20260310_114239.sql
+
+# Database backups
+*.db
+*.sqlite
+*.sqlite3
+
+# Node modules
+node_modules/
+frontend/node_modules/
+
+# Frontend build
+frontend/dist/
+frontend/.vite/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+
+# Data processing output
+data_process/logs/
+data_process/temp/
+data_process/output/
+
+# Python cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre
+.pyre/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Skills/My App (not needed for project deployment)
+my_app/

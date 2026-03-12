@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>剪贴板测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            background: #409eff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background: #66b1ff;
+        }
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success {
+            background: #f0f9ff;
+            color: #409eff;
+        }
+        .error {
+            background: #fef0f0;
+            color: #f56c6c;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>剪贴板功能测试</h1>
+
+    <div class="test-section">
+        <h2>测试1: 现代Clipboard API</h2>
+        <input type="text" id="text1" value="测试商品ID123456">
+        <button onclick="testModern()">使用现代API复制</button>
+        <div id="result1" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>测试2: 降级方案</h2>
+        <input type="text" id="text2" value="测试商品ID789012">
+        <button onclick="testFallback()">使用降级方案复制</button>
+        <div id="result2" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>测试3: 粘贴验证</h2>
+        <p>点击下面的输入框，按 Ctrl+V 验证是否复制成功：</p>
+        <input type="text" id="paste" placeholder="在此粘贴验证">
+    </div>
+
+    <div class="test-section">
+        <h2>浏览器信息</h2>
+        <div id="browserInfo"></div>
+    </div>
+
+    <script>
+        // 显示浏览器信息
+        document.getElementById('browserInfo').innerHTML = `
+            <p><strong>用户代理:</strong> ${navigator.userAgent}</p>
+            <p><strong>Clipboard API支持:</strong> ${!!navigator.clipboard}</p>
+            <p><strong>协议:</strong> ${window.location.protocol}</p>
+            <p><strong>主机:</strong> ${window.location.host}</p>
+        `;
+
+        // 测试现代Clipboard API
+        async function testModern() {
+            const text = document.getElementById('text1').value;
+            const resultDiv = document.getElementById('result1');
+
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(text);
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = '✅ 复制成功！请使用 Ctrl+V 验证';
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = '❌ 浏览器不支持 Clipboard API';
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '❌ 复制失败: ' + error.message;
+            }
+        }
+
+        // 测试降级方案
+        function testFallback() {
+            const text = document.getElementById('text2').value;
+            const resultDiv = document.getElementById('result2');
+
+            try {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-9999px';
+                textArea.style.top = '0';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+
+                if (successful) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = '✅ 复制成功！请使用 Ctrl+V 验证';
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = '❌ execCommand 返回 false';
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '❌ 复制失败: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
