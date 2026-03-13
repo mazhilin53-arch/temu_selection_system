@@ -43,6 +43,10 @@ env/
 logs/
 *.sql
 !product_data_postgres_20260310_114239.sql
+!database/schema.sql
+
+# 忽略导出的数据文件（太大，不提交到 Git）
+database/data_dump.sql
 
 # Database backups
 *.db
