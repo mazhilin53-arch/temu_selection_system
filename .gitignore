@@ -74,7 +74,10 @@ Thumbs.db
 data_process/logs/
 data_process/temp/
 data_process/output/
-data_process/raw_data/
+
+# 忽略 raw_data 文件夹中的所有内容，但保留 README.md
+data_process/raw_data/*
+!data_process/raw_data/README.md
 
 # Python cache
 .pytest_cache/
