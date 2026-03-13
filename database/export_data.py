@@ -65,7 +65,7 @@ TRUNCATE TABLE product_main CASCADE;
             columns = [desc[0] for desc in cur.description]
 
             if rows:
-                f.write(f"-- 导入 product_main 表（{len(rows)} 条记录）\\n")
+                f.write(f"-- 导入 product_main 表（{len(rows)} 条记录）\n")
                 for row in rows:
                     values = []
                     for value in row:
@@ -80,12 +80,12 @@ TRUNCATE TABLE product_main CASCADE;
                         else:
                             values.append(f"'{value}'")
 
-                    f.write(f"INSERT INTO product_main ({', '.join(columns)}) VALUES ({', '.join(values)});\\n")
+                    f.write(f"INSERT INTO product_main ({', '.join(columns)}) VALUES ({', '.join(values)});\n")
 
-                f.write("\\n")
+                f.write("\n")
                 print(f"[OK] product_main table exported, {len(rows)} records")
             else:
-                f.write("-- product_main 表无数据\\n\\n")
+                f.write("-- product_main 表无数据\n\n")
                 print("[WARNING] product_main table has no data")
 
             # 2. 导出 product_history 表
@@ -95,7 +95,7 @@ TRUNCATE TABLE product_main CASCADE;
             columns = [desc[0] for desc in cur.description]
 
             if rows:
-                f.write(f"-- 导入 product_history 表（{len(rows)} 条记录）\\n")
+                f.write(f"-- 导入 product_history 表（{len(rows)} 条记录）\n")
                 for row in rows:
                     values = []
                     for value in row:
@@ -109,12 +109,12 @@ TRUNCATE TABLE product_main CASCADE;
                         else:
                             values.append(f"'{value}'")
 
-                    f.write(f"INSERT INTO product_history ({', '.join(columns)}) VALUES ({', '.join(values)});\\n")
+                    f.write(f"INSERT INTO product_history ({', '.join(columns)}) VALUES ({', '.join(values)});\n")
 
-                f.write("\\n")
+                f.write("\n")
                 print(f"[OK] product_history table exported, {len(rows)} records")
             else:
-                f.write("-- product_history 表无数据\\n\\n")
+                f.write("-- product_history 表无数据\n\n")
                 print("[WARNING] product_history table has no data")
 
             # 3. 导出 raw_products 表
@@ -124,7 +124,7 @@ TRUNCATE TABLE product_main CASCADE;
             columns = [desc[0] for desc in cur.description]
 
             if rows:
-                f.write(f"-- 导入 raw_products 表（{len(rows)} 条记录）\\n")
+                f.write(f"-- 导入 raw_products 表（{len(rows)} 条记录）\n")
                 for row in rows:
                     values = []
                     for value in row:
@@ -138,12 +138,12 @@ TRUNCATE TABLE product_main CASCADE;
                         else:
                             values.append(f"'{value}'")
 
-                    f.write(f"INSERT INTO raw_products ({', '.join(columns)}) VALUES ({', '.join(values)});\\n")
+                    f.write(f"INSERT INTO raw_products ({', '.join(columns)}) VALUES ({', '.join(values)});\n")
 
-                f.write("\\n")
+                f.write("\n")
                 print(f"[OK] raw_products table exported, {len(rows)} records")
             else:
-                f.write("-- raw_products 表无数据\\n\\n")
+                f.write("-- raw_products 表无数据\n\n")
                 print("[WARNING] raw_products table has no data")
 
             # 4. 重置序列
@@ -168,10 +168,10 @@ SELECT '原始记录总数：' || COUNT(*) as info FROM raw_products;
         cur.close()
         conn.close()
 
-        print(f"\\n[SUCCESS] Data export completed!")
+        print(f"\n[SUCCESS] Data export completed!")
         print(f"[FILE] Output: {output_file}")
         print(f"[SIZE] File size: {os.path.getsize(output_file) / 1024:.2f} KB")
-        print(f"\\n[INFO] Team members usage:")
+        print(f"\n[INFO] Team members usage:")
         print(f"   1. Execute schema.sql to create table structure")
         print(f"   2. Execute this file to import data: psql -U postgres -d temu_products -f {output_file}")
 
